@@ -45,10 +45,10 @@ def main():
         view.export(export_dir=str(out), dataset_type=fo.types.YOLOv5Dataset,
                     label_field=args.field, split=split, classes=CLASSES)
     print((out / "dataset.yaml").read_text())
-    # the training container expects the yaml at /data/dataset.yaml with paths relative to /data
+    # the training container syncs the export to /data and trains on /data/dataset.yaml;
+    # ultralytics resolves a relative `path:` against its own datasets dir, so make it absolute
     yaml = out / "dataset.yaml"
-    text = yaml.read_text().replace(str(out), ".")
-    yaml.write_text(text)
+    yaml.write_text(yaml.read_text().replace(f"path: {out}", "path: /data"))
     print("->", out, "size MB:", round(sum(p.stat().st_size for p in out.rglob('*') if p.is_file()) / 1e6))
 
 

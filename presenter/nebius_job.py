@@ -61,13 +61,23 @@ class NebiusJob:
                                aws_access_key_id=key, aws_secret_access_key=secret)
 
     # --- storage -----------------------------------------------------------
-    def upload_dir(self, local_dir, prefix):
+    def upload_dir(self, local_dir, prefix, workers=32):
+        """Parallel upload; ~10k small files take minutes, not an hour."""
+        from concurrent.futures import ThreadPoolExecutor, as_completed
+
         local_dir = Path(local_dir)
         files = [p for p in local_dir.rglob("*") if p.is_file()]
-        for i, p in enumerate(files, 1):
+
+        def _put(p):
             self.s3.upload_file(str(p), self.bucket, f"{prefix}/{p.relative_to(local_dir).as_posix()}")
-            if i % 500 == 0 or i == len(files):
-                print(f"  uploaded {i}/{len(files)}")
+
+        done = 0
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            for fut in as_completed([ex.submit(_put, p) for p in files]):
+                fut.result()
+                done += 1
+                if done % 1000 == 0 or done == len(files):
+                    print(f"  uploaded {done}/{len(files)}", flush=True)
         return f"s3://{self.bucket}/{prefix}"
 
     def download(self, key, local_path):

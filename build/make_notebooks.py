@@ -216,9 +216,11 @@ The gripper is visible in almost every wrist-camera frame. If the labeler misses
 has_gripper = wrist.filter_labels("auto_labels", F("label") == "gripper", only_matches=True)
 print(f"wrist frames: {len(wrist)}, with a gripper box: {len(has_gripper)} ({100*len(has_gripper)/len(wrist):.0f}%)")
 
-# Brick boxes should mostly appear while the gripper is closed on a brick task
+# Brick boxes should live on the brick-in-drawer episodes. Where does the labeler actually put them?
 brick = frames.filter_labels("auto_labels", F("label") == "brick", only_matches=True)
-print(brick.count_values("task_type"))"""),
+print(brick.count_values("task_type"))
+session.view = brick.match(F("task_type") == "clump-unclump")"""),
+(md, """Most "brick" boxes land on **clump-unclump** episodes — there is no brick there. The prompt said *blue brick*; the labeler grabbed blue cloth and plush toys. That is a prompt problem, and it is exactly the kind of thing that only shows up when labels are checked against metadata you already have (the task string). Fix the prompt, or drop `brick` from the training classes for those tasks."""),
 (md, """## Optional: run Grounding DINO yourself on 20 frames (≈30 s on Apple Silicon, ~2 min CPU)"""),
 (code, """# OPTIONAL
 # import torch

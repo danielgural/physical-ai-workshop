@@ -24,7 +24,8 @@ print("uniqueness…")
 fob.compute_uniqueness(ds, embeddings="clip")
 
 print("similarity index…")
-fob.compute_similarity(ds, embeddings="clip", brain_key="frames_sim", backend="sklearn")
+# model= makes the index prompt-aware: sort_by_similarity("a robot gripper …") works
+fob.compute_similarity(ds, model="clip-vit-base32-torch", embeddings="clip", brain_key="frames_sim", backend="sklearn")
 
 print("UMAP…")
 fob.compute_visualization(ds, embeddings="clip", brain_key="frames_viz", method="umap", seed=51)
