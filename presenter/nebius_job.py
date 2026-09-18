@@ -177,5 +177,5 @@ class NebiusJob:
 
     def logs(self, job_id):
         """Nebius exposes job logs through the CLI; stream them here."""
-        return subprocess.run(["nebius", "ai", "job", "logs", "--id", job_id], text=True,
+        return subprocess.run(["nebius", "ai", "job", "logs", job_id, "--tail", "400"], text=True,
                               capture_output=True).stdout

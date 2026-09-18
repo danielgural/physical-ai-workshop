@@ -32,7 +32,8 @@ Rule: **nothing the room depends on is computed live.** Every brain run, label, 
 - Frames: 5,172 · cameras 1,724 each · gripper closed on 2,386 frames · 356 near-duplicates · uniqueness range 0.00–1.00.
 - MCAP subset: 10 episodes, 891 MB, temporal tags grasp 17 / release 14.
 - Hero episode `…19h-40m-44s`: 7.1 s, "put brick in drawer shelf and close drawer", success.
-- Auto-labels / YOLO numbers: see `presenter/NUMBERS.md` (written by `build/finalize.py` after the dry run).
+- Auto-labels / YOLO numbers: see `presenter/NUMBERS.md` (written by `build/finalize.py` after the dry run). Dry run 2026-09-18: val mAP 0.517 vs auto-labels; gripper recall 0.78.
+- **Nebius job timing (dry run 2026-09-18, L40S, 15 epochs, 3,681 train images):** upload 9,745 files 103 s · PROVISIONING→STARTING 79 s · IMAGE_PULLING until 375 s · RUNNING 265 s · COMPLETED at 640 s after submit. **Budget 11 minutes submit→weights.** Submit at minute ~50 (during the embeddings segment) so the weights are back by minute 75. Never wait on it; `weights/best-dryrun.pt` is on disk.
 
 ## If it goes wrong
 
