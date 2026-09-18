@@ -51,6 +51,17 @@ def _s3_creds():
     return d["aws_access_key_id"], d["secret"]
 
 
+async def _first_subnet(sdk, project_id):
+    """spec.subnet_id is required by the API; a project usually has exactly one."""
+    from nebius.api.nebius.vpc.v1 import ListSubnetsRequest, SubnetServiceClient
+
+    resp = await SubnetServiceClient(sdk).list(ListSubnetsRequest(parent_id=project_id))
+    items = list(resp.items)
+    if not items:
+        raise RuntimeError(f"no VPC subnet in {project_id}; set NEBIUS_SUBNET_ID")
+    return items[0].metadata.id
+
+
 class NebiusJob:
     def __init__(self, project_id=PROJECT_ID, bucket=BUCKET, image=IMAGE):
         self.project_id, self.bucket, self.image = project_id, bucket, image
@@ -114,8 +125,9 @@ class NebiusJob:
             from nebius.api.nebius.compute.v1 import DiskSpec
 
             async with SDK() as sdk:
+                subnet = os.environ.get("NEBIUS_SUBNET_ID") or await _first_subnet(sdk, self.project_id)
                 spec = JobSpec(
-                    image=self.image, platform=platform, preset=preset,
+                    image=self.image, platform=platform, preset=preset, subnet_id=subnet,
                     environment_variables=[JobSpec.EnvironmentVariable(name=k, value=v) for k, v in env.items()],
                     timeout=datetime.timedelta(hours=timeout_h),
                     disk=JobSpec.DiskSpec(size_bytes=disk_gb * 1024 ** 3, type=DiskSpec.DiskType.NETWORK_SSD),
