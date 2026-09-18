@@ -1,0 +1,7 @@
+# Attendee environment — everything runs on CPU.
+fiftyone>=1.21.0
+protobuf
+huggingface_hub
+ultralytics>=8.3
+jupyterlab
+umap-learn

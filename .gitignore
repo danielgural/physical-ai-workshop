@@ -1,0 +1,10 @@
+data/
+*.pt
+!presenter/weights/README.md
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+build/yolo_export/
+slides/*.pptx.bak
+runs/

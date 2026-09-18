@@ -1,0 +1,82 @@
+[
+  {
+    "episode_id": "AUTOLab+0d4edc83+2023-10-21-19h-40m-44s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+0d4edc83+2023-10-21-19h-40m-44s.mcap",
+    "task_type": "container-transfer",
+    "success": true,
+    "duration_s": 7.1,
+    "task": "put brick in drawer shelf and close drawer"
+  },
+  {
+    "episode_id": "AUTOLab+0d4edc83+2023-10-21-19h-24m-27s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+0d4edc83+2023-10-21-19h-24m-27s.mcap",
+    "task_type": "container-transfer",
+    "success": true,
+    "duration_s": 10.617,
+    "task": "Put brick in drawer shelf and close drawer"
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-25-10h-04m-12s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-25-10h-04m-12s.mcap",
+    "task_type": "clump-unclump",
+    "success": true,
+    "duration_s": 39.269,
+    "task": "Clump objects (cloth, rope, stuffed toy)"
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-23-15h-35m-31s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-23-15h-35m-31s.mcap",
+    "task_type": "unhang-cloth",
+    "success": false,
+    "duration_s": 6.334,
+    "task": "Unhang cloth from chair."
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-26-15h-53m-47s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-26-15h-53m-47s.mcap",
+    "task_type": "fold-cloth",
+    "success": false,
+    "duration_s": 8.467,
+    "task": "Fold cloth in half."
+  },
+  {
+    "episode_id": "AUTOLab+0d4edc83+2023-10-21-20h-27m-01s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+0d4edc83+2023-10-21-20h-27m-01s.mcap",
+    "task_type": "multi-step",
+    "success": false,
+    "duration_s": 1.416,
+    "task": "Do any three tasks consecutively.\n\nSuggested tasks:\n* put brick in drawer shelf and close drawer\n* put brick in drawer shelf and close drawer\n* put brick in drawer shelf and close drawer"
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-24-16h-24m-13s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-24-16h-24m-13s.mcap",
+    "task_type": "clump-unclump",
+    "success": false,
+    "duration_s": 29.536,
+    "task": "Unclump and spread out objects (cloth, rope, plush toy)"
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-26-15h-15m-00s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-26-15h-15m-00s.mcap",
+    "task_type": "fold-cloth",
+    "success": true,
+    "duration_s": 16.901,
+    "task": "Fold cloth in half."
+  },
+  {
+    "episode_id": "AUTOLab+44bb9c36+2023-11-23-18h-36m-37s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+44bb9c36+2023-11-23-18h-36m-37s.mcap",
+    "task_type": "unhang-cloth",
+    "success": true,
+    "duration_s": 16.167,
+    "task": "Unhang cloth from chair."
+  },
+  {
+    "episode_id": "AUTOLab+0d4edc83+2023-10-27-20h-43m-06s",
+    "filepath": "/Users/dangural/Documents/development/talks/real-world-cv-systems/data/droid-demo/data/AUTOLab+0d4edc83+2023-10-27-20h-43m-06s.mcap",
+    "task_type": "container-transfer",
+    "success": true,
+    "duration_s": 2.834,
+    "task": "Move object into or out of container (ex: drawer, clothes hamper, plate, trashcan, washer)"
+  }
+]
