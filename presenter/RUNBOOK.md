@@ -6,7 +6,7 @@ Rule: **nothing the room depends on is computed live.** Every brain run, label, 
 
 - [ ] Laptop: this repo's venv, `nebius profile create` done (`nebius iam whoami` works), `~/Documents/api/nebius/workshop-s3-key.json` present, Teams SDK venv for demo.fiftyone.ai (`~/Documents/development/gm/.venv`, key at `~/Documents/api/demo/demo.txt`).
 - [ ] Local OSS datasets present: `droid-mcap-workshop` (10), `droid-frames` (5,172). `fiftyone app launch` once to warm the browser cache.
-- [ ] demo.fiftyone.ai: `Droid demo` (100 episodes) and `Droid frames` (5,172 frames, all runs) load; Embeddings panel opens `frames_viz`; Model Evaluation opens `eval_yolo`.
+- [ ] demo.fiftyone.ai: `Droid demo` (100 episodes), `Droid workshop episodes` (the 10 attendees have, with brick-visible/gripper-visible tags) and `Droid frames` (5,172 frames, all runs) load; Embeddings panel opens `frames_viz`; Model Evaluation opens `eval_yolo`.
 - [ ] Nebius: `nebius ai job list` answers; bucket `physical-ai-workshop` lists `runs/dryrun/output/best.pt`; GPU quota for `gpu-l40s-a` in eu-north1.
 - [ ] Deck for the city: `python slides/build_deck.py --city <city>`; all three QR codes scanned from a phone.
 - [ ] USB sticks: `export_for_usb.sh` output (both datasets as FiftyOneDataset exports) + `requirements.txt` wheels.

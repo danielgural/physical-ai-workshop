@@ -30,25 +30,67 @@ TARGETS = {
 }
 
 
+def _export_without_brain(export_dir):
+    """The OSS 1.22 visualization results do not deserialize in the Enterprise
+    SDK's brain version (0-d sample_ids array). Import everything else and
+    recompute the brain runs on the deployment from the stored `clip` field."""
+    tmp = Path(tempfile.mkdtemp(prefix="stage-"))
+    for item in Path(export_dir).iterdir():
+        if item.name == "brain":
+            continue
+        (tmp / item.name).symlink_to(item.resolve())
+    return tmp
+
+
 def stage(export_dir, remote_name, gcs_prefix):
     if fo.dataset_exists(remote_name):
         print(f"replacing existing {remote_name}")
         fo.delete_dataset(remote_name)
-    ds = fo.Dataset.from_dir(dataset_dir=str(export_dir), dataset_type=fo.types.FiftyOneDataset,
+    src = _export_without_brain(export_dir) if (Path(export_dir) / "brain").exists() else Path(export_dir)
+    ds = fo.Dataset.from_dir(dataset_dir=str(src), dataset_type=fo.types.FiftyOneDataset,
                              name=remote_name, persistent=True)
-    print(f"{remote_name}: {len(ds)} samples imported; uploading media to {gcs_prefix}")
+    ds.persistent = True  # the from_dir kwarg did not stick on Enterprise: the dataset vanished when the process exited
+    print(f"{remote_name}: {len(ds)} samples imported (persistent={ds.persistent}); uploading media to {gcs_prefix}")
     fos.upload_media(ds, gcs_prefix, update_filepaths=True, overwrite=True, progress=True)
     ds.compute_metadata()
+
+    if "clip" in ds.get_field_schema():
+        import fiftyone.brain as fob
+
+        print("recomputing brain runs from the stored clip embeddings…")
+        for key in ds.list_brain_runs():  # configs came in with metadata.json but results did not
+            ds.delete_brain_run(key)
+        fob.compute_uniqueness(ds, embeddings="clip")
+        fob.compute_similarity(ds, model="clip-vit-base32-torch", embeddings="clip", brain_key="frames_sim")
+        fob.compute_visualization(ds, embeddings="clip", brain_key="frames_viz", method="umap", seed=51)
+
     print(ds)
     print("brain runs:", ds.list_brain_runs(), "| evaluations:", ds.list_evaluations())
     if ds.media_type == "multimodal":
         print("temporal tags:", ds.temporal_tags.count())
 
 
+def recompute_only(remote_name):
+    """Finish a staging whose import + upload already succeeded."""
+    import fiftyone.brain as fob
+
+    ds = fo.load_dataset(remote_name)
+    for key in ds.list_brain_runs():
+        ds.delete_brain_run(key)
+    fob.compute_uniqueness(ds, embeddings="clip")
+    fob.compute_similarity(ds, model="clip-vit-base32-torch", embeddings="clip", brain_key="frames_sim")
+    fob.compute_visualization(ds, embeddings="clip", brain_key="frames_viz", method="umap", seed=51)
+    print("brain runs:", ds.list_brain_runs(), "| evaluations:", ds.list_evaluations())
+    print("media:", ds.first().filepath)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", choices=list(TARGETS))
+    ap.add_argument("--recompute-runs", metavar="REMOTE_NAME", help="skip import/upload; rebuild brain runs on an existing dataset")
     args = ap.parse_args()
+    if args.recompute_runs:
+        return recompute_only(args.recompute_runs)
     for key, (export_name, remote_name) in TARGETS.items():
         if args.only and key != args.only:
             continue
