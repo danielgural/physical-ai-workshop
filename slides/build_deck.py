@@ -309,7 +309,7 @@ def build(city_key):
                   "Show extract_frames.py briefly: H.264 NAL units → ffmpeg → JPEG, each frame keeps episode_id, camera, "
                   "timestamp_ns, gripper_open, joint_speed_norm. Then in the App: match gripper_open == False, sort by "
                   "uniqueness both ways, show the near-duplicate tag, build + save curated_train.", hot=1)
-    d.follow_along(s, "02_curate_frames.ipynb", "demo.fiftyone.ai · Droid frames (5,172 frames)")
+    d.follow_along(s, "02_curate_frames.ipynb", "demo.fiftyone.ai · Droid workshop frames (5,172 frames)")
 
     # 10 frames detail
     s = d.slide("The frame remembers where it came from. That link is the payoff in segment 6.")
