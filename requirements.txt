@@ -1,7 +1,9 @@
-# Attendee environment — everything runs on CPU.
-fiftyone>=1.21.0
-protobuf
-huggingface_hub
-ultralytics>=8.3
-jupyterlab
-umap-learn
+# Attendee environment — CPU only. Pinned to the versions the notebooks were verified with (2026-09-18).
+fiftyone==1.22.0
+protobuf>=5,<8
+huggingface_hub>=1.29,<2
+ultralytics==8.4.155
+jupyterlab>=4.4,<5
+# umap-learn is only needed for the OPTIONAL "recompute the visualization yourself" cell;
+# the precomputed UMAP in the dataset works without it. Install separately if you want it:
+#   pip install umap-learn

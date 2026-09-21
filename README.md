@@ -16,6 +16,7 @@ cd physical-ai-workshop
 python -m venv .venv && source .venv/bin/activate     # Python 3.10+
 pip install -r requirements.txt
 python notebooks/download_data.py                       # ~1.1 GB from Hugging Face, once
+python notebooks/check_setup.py                         # prints READY
 jupyter lab notebooks/
 ```
 
