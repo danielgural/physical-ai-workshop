@@ -8,3 +8,4 @@ __pycache__/
 build/yolo_export/
 slides/*.pptx.bak
 runs/
+internal/

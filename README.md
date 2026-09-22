@@ -60,7 +60,7 @@ The full 100-episode set is [`dgural/droid-mcap-demo`](https://huggingface.co/da
 ```
 notebooks/    attendee notebooks 01–06 + download_data.py
 build/        how the datasets were made (frame extraction from MCAP, embeddings, auto-labels, subset)
-presenter/    the Nebius training notebook, job helper and runbook
+presenter/    the Nebius training notebook and job helper (presenter-side)
 slides/       deck generator + QR codes
 ```
 
