@@ -375,6 +375,18 @@ def build(city_key):
         ("Curation chose what to label ", "— curated_train, minus near-duplicates, is the training set"),
     ], size=19)
 
+    # 14b intermission (Stuttgart format: part one 6–7 PM, lightning talks, part two 7:30–8:30)
+    s = d.slide("END OF PART ONE. The Nebius job was submitted during the embeddings segment; say so: "
+                "'a GPU in Finland is training while we listen to the talks.' Repo QR stays up through the break.")
+    d.kicker(s, "Part one done")
+    d.text(s, Inches(0.9), Inches(1.7), Inches(11.5), Inches(1.4), "Lightning talks. Then we train.", size=54, color=INK, bold=True)
+    d.bullets(s, [
+        ("Right now on Nebius ", "— YOLO11n is fine-tuning on the frames we just labeled (L40S, 15 epochs, ~10 min)"),
+        ("Part two ", "— pull the weights, evaluate, put detections back on the recording, then Nebius"),
+        ("Catch up ", "— notebooks 01–04 are what we did; 05–06 are next"),
+    ], y=Inches(3.4), size=21, w=Inches(7.6))
+    d.qr(s, "repo", Inches(9.4), Inches(2.6), size=Inches(2.8), caption="github.com/danielgural/physical-ai-workshop")
+
     # 15 segment: train
     s = d.segment("train", "Fine-tune YOLO11n on Nebius", "75–95 min",
                   "Export to YOLO format. Stage on Nebius Object Storage. Submit a Serverless AI Job from a notebook. Pull best.pt.",
