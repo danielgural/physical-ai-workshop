@@ -25,8 +25,16 @@ nb("01_explore_mcap.ipynb", [
 You have 10 episodes locally (`droid-mcap-workshop`). The presenter has 100 on demo.fiftyone.ai. Same workflow."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-episodes = fo.load_dataset("droid-mcap-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+episodes = load("droid-mcap-workshop")
 print(episodes.media_type, len(episodes), "episodes")
 episodes"""),
 (code, """session = fo.launch_app(episodes)"""),
@@ -78,8 +86,16 @@ nb("02_curate_frames.ipynb", [
 You are loading the result: 5,172 frames from the 75 episodes that carry video."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-frames = fo.load_dataset("droid-frames-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+frames = load("droid-frames-workshop")
 print(len(frames), "frames from", len(frames.distinct("episode_id")), "episodes")
 print(frames.count_values("camera"))
 frames"""),
@@ -142,8 +158,16 @@ nb("03_embeddings.ipynb", [
 **Agenda: 40–55 min.** Every frame has a CLIP embedding (`clip`), a similarity index (`frames_sim`) and a 2-D UMAP layout (`frames_viz`). The presenter computes these on Nebius for the full deployment; here they are precomputed so the workflow stays interactive on a laptop."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-frames = fo.load_dataset("droid-frames-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+frames = load("droid-frames-workshop")
 print(frames.list_brain_runs())
 session = fo.launch_app(frames)"""),
 (md, """## Embeddings panel
@@ -194,8 +218,16 @@ nb("04_autolabel.ipynb", [
 Prompts used: `robot gripper . robot arm . blue brick . scissors . drawer . cloth . cardboard box`, folded onto 7 labels. The result is on every frame as `auto_labels`."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-frames = fo.load_dataset("droid-frames-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+frames = load("droid-frames-workshop")
 print(frames.count_values("auto_labels.detections.label"))
 session = fo.launch_app(frames)"""),
 (md, """## Look before you trust
@@ -255,8 +287,16 @@ nb("05_train_eval.ipynb", [
 That model's predictions are on your frames as `yolo11n_preds`, and the evaluation against the auto-labels is the run `eval_yolo`."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-frames = fo.load_dataset("droid-frames-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+frames = load("droid-frames-workshop")
 print(frames.list_evaluations())
 session = fo.launch_app(frames)"""),
 (md, """## Model Evaluation panel
@@ -310,9 +350,17 @@ nb("06_close_the_loop.ipynb", [
 **Agenda: 95–105 min.** Every frame knows its `episode_id` and `timestamp_ns`. So detector output on frames can be turned back into **temporal tags** on the episode — intervals where the gripper, or a brick, is visible — and queried exactly like the grasp/release tags we started with."""),
 (code, """import fiftyone as fo
 from fiftyone import ViewField as F
+import fiftyone.utils.huggingface as fouh
 
-episodes = fo.load_dataset("droid-mcap-workshop")
-frames = fo.load_dataset("droid-frames-workshop")
+def load(name):
+    # Local copy if download_data.py already ran, otherwise pull it from Hugging Face now
+    if fo.dataset_exists(name):
+        return fo.load_dataset(name)
+    print(f"{name} not found locally; downloading from Hugging Face (one time)…")
+    return fouh.load_from_hub(f"dgural/{name}", name=name, persistent=True)
+
+episodes = load("droid-mcap-workshop")
+frames = load("droid-frames-workshop")
 print(episodes.temporal_tags.count())"""),
 (md, """The dataset already carries `brick-visible` and `gripper-visible` tags derived from the Nebius-trained YOLO11n. Here is how they were built, and you can rebuild them for any label:"""),
 (code, """from fiftyone.core.tags import TemporalTag

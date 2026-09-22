@@ -1,6 +1,6 @@
 # Setup
 
-Everything attendees run works on a laptop CPU. Do the download **before** you arrive.
+Everything attendees run works on a laptop CPU. 
 
 ## 1. Python environment
 
@@ -27,8 +27,6 @@ This loads two datasets from Hugging Face into your local FiftyOne database and 
 - `droid-mcap-workshop` — 10 robot episodes as `.mcap` (~0.9 GB)
 - `droid-frames-workshop` — 5,172 frames with embeddings, labels and predictions (~0.2 GB)
 
-If you are on hotel wifi, that is enough. If the venue download is slow, the presenter has both datasets on a USB stick; `download_data.py --from-usb /Volumes/WORKSHOP` imports them from there.
-
 ## 3. Check it works
 
 ```bash
@@ -45,14 +43,16 @@ Open `01_explore_mcap.ipynb` and run the first two cells. A browser tab with the
 
 ## Troubleshooting
 
-- **`protobuf` import error when opening an episode** — `pip install protobuf`; some Python builds miss it.
+- `protobuf` **import error when opening an episode** — `pip install protobuf`; some Python builds miss it.
 - **The App opens but episodes show a black tile** — give the first episode 5–10 s; the browser reads the MCAP file directly and decodes the video in-page.
 - **Python version** — 3.10 to 3.14 are tested. Conda users: `conda create -n workshop python=3.12` then the same `pip install -r requirements.txt`.
-- **`umap-learn`** — not installed by default; only the OPTIONAL recompute cell needs it. `pip install umap-learn` if you want it.
+- `umap-learn` — not installed by default; only the OPTIONAL recompute cell needs it. `pip install umap-learn` if you want it.
 - **No Python at all / locked-down laptop** — pair with a neighbour. Every notebook is also readable on GitHub with outputs.
 - **Port 5151 already in use** — `fo.launch_app(dataset, port=5152)`.
 - **Corporate laptop blocks Hugging Face** — use the USB import above.
 - **Apple Silicon** — everything runs natively; the optional inference cells use the `mps` device automatically.
+
+
 
 ## Presenter-only pieces
 
